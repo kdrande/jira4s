@@ -1,3 +1,5 @@
+//import bintray.BintrayKeys._
+
 name := "jira4s"
 
 organization := "com.allantl"
@@ -30,6 +32,9 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "org.specs2" %% "specs2-core" % Specs2Version % "it,test",
       "org.specs2" %% "specs2-scalacheck" % Specs2Version % "it,test",
-    )
+    ),
+    bintrayRepository := "evo-bintray-kdrande",
+    //bintrayOmitLicense := true
+    licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
   )
   .settings(parallelExecution in IntegrationTest := false)
