@@ -19,6 +19,16 @@ private[jira4s] trait IssueClient[R[_], T <: AuthContext] extends HasClient[R] {
       .send()
       .parseResponse
 
+  def getIssueFields(issueId: String, fields: List[String])(
+    implicit userCtx: T
+  ): R[Either[JiraError, Issue]] =
+    sttp
+      .get(uri"$restEndpoint/issue/$issueId/?fields=${fields.mkString(",")}")
+      .jiraAuthenticated
+      .response(asJson[Issue])
+      .send()
+      .parseResponse
+
   def createIssue(issuePayload: IssuePayload, updateHistory: Boolean = false)(
       implicit userCtx: T
   ): R[Either[JiraError, IssueCreateResponse]] =
